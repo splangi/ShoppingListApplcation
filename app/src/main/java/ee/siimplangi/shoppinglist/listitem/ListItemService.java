@@ -11,7 +11,6 @@ public interface ListItemService<T extends ListItem> {
 
     public long addItem(T item);
 
-    //For example data
     public long addItem(T item, SQLiteDatabase db);
 
     public void deleteItem(long id);

@@ -14,8 +14,6 @@ import ee.siimplangi.shoppinglist.R;
  */
 public abstract class ListViewAdapter<D extends ListItem, VH extends ListItemViewHolder> extends RecyclerView.Adapter<VH> {
 
-    // TODO Think about if we need a generic class.
-
     private List<D> dataSet;
     private ListUserActionListener listener;
     private boolean editMode = false;
@@ -34,7 +32,6 @@ public abstract class ListViewAdapter<D extends ListItem, VH extends ListItemVie
 
     @Override
     public void onBindViewHolder(VH listItemViewHolder, int i) {
-        //TODO Editmode
         listItemViewHolder.setData(dataSet.get(i), editMode);
 
     }

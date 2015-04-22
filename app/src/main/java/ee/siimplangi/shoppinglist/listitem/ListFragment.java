@@ -15,9 +15,6 @@ import ee.siimplangi.shoppinglist.MainActivity;
 import ee.siimplangi.shoppinglist.R;
 import ee.siimplangi.shoppinglist.toolbar.ToolbarActionListener;
 
-/**
- * Created by Siim on 18.04.2015.
- */
 public abstract class ListFragment<A extends ListViewAdapter, D extends ListItem, S extends ListItemService>
         extends Fragment implements ToolbarActionListener, ListUserActionListener<D> {
 

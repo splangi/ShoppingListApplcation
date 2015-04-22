@@ -6,6 +6,7 @@
     </style>
 
     <color name="appColorPrimary">#00AA00</color>
+    <color name="textColorAddNewItemToolbar">#FFF</color>
     <color name="appColorPrimaryDark">#008800</color>
     <color name="toggleBackground">#00CC00</color>
 

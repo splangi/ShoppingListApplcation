@@ -33,6 +33,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/add_new"
             android:inputType="textCapSentences"
+            android:textColor="@color/abc_primary_text_material_dark"
+            android:textColorHint="@color/primary_text_disabled_material_dark"
             android:imeOptions="actionDone"
             android:singleLine="true"
             android:paddingBottom="16dp"

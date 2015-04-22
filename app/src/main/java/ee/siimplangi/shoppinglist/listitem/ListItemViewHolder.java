@@ -78,14 +78,6 @@ public abstract class ListItemViewHolder<T extends ListItem> extends RecyclerVie
         return completedCheckBox;
     }
 
-    public TextView getTaskTextView() {
-        return taskText;
-    }
-
-    public Button getDeleteButton() {
-        return deleteButton;
-    }
-
     public LinearLayout getLayout() {
         return layout;
     }
