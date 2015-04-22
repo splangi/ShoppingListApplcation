@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Shopping List</string>
+    <string name="add_new">Add new</string>
+    <string name="accept">Accept</string>
+    <string name="cancel">Cancel</string>
+    <string name="my_lists">My shopping lists</string>
+    <string name="edit">Edit</string>
+    <string name="enter_name">Please enter a name</string>
+</resources>
