@@ -7,9 +7,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import ee.siimplangi.shoppinglist.shoppingitem.ShoppingItemsFragment;
+import java.util.List;
+
 import ee.siimplangi.shoppinglist.shoppingcart.ShoppingCart;
 import ee.siimplangi.shoppinglist.shoppingcart.ShoppingCartsFragment;
+import ee.siimplangi.shoppinglist.shoppingitem.ShoppingItemsFragment;
 import ee.siimplangi.shoppinglist.toolbar.AddNewItemToolbar;
 import ee.siimplangi.shoppinglist.toolbar.ToolbarActionListener;
 
@@ -82,10 +84,10 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    public void onListItemClicked(ShoppingCart item){
+    public void onShoppingCartViewClicked(ShoppingCart item){
         Bundle args = new Bundle();
-        args.putLong(ShoppingItemsFragment.PARENT_LIST_ID_KEY, item.getId());
-        args.putString(ShoppingItemsFragment.PARENT_LIST_TEXT_KEY, item.getText());
+        args.putLong(ShoppingItemsFragment.PARENT_CART_ID_KEY, item.getId());
+        args.putString(ShoppingItemsFragment.PARENT_CART_TEXT_KEY, item.getText());
         ShoppingItemsFragment fragment = new ShoppingItemsFragment();
         fragment.setArguments(args);
         getSupportFragmentManager().beginTransaction()
@@ -93,11 +95,15 @@ public class MainActivity extends ActionBarActivity {
                 .commit();
     }
 
+    public void setAutoCompleteData(List<String> data){
+        addNewItemToolbar.setAutoCompleteData(data);
+    }
+
     public void showBackButtonOnActionBar(boolean show){
         getSupportActionBar().setDisplayHomeAsUpEnabled(show);
     }
 
-    public void setListener(ToolbarActionListener listener) {
+    public void setToolBarActionListener(ToolbarActionListener listener) {
         this.listener = listener;
         addNewItemToolbar.setListener(listener);
     }

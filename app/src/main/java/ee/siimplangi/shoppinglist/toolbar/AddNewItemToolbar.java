@@ -7,10 +7,12 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
 
 import ee.siimplangi.shoppinglist.R;
 
@@ -19,10 +21,11 @@ import ee.siimplangi.shoppinglist.R;
  */
 public class AddNewItemToolbar extends Toolbar {
 
-    private AutoCompleteTextView editText2;
-    private EditText editText;
+    private AutoCompleteTextView editText;
 
     private ToolbarActionListener listener;
+
+    private ArrayAdapter<String> autoCompleteAdapter;
 
     public AddNewItemToolbar(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -32,9 +35,15 @@ public class AddNewItemToolbar extends Toolbar {
 
     @Override
     protected void onFinishInflate() {
-        editText = (EditText) findViewById(R.id.addNewEditText);
+        editText = (AutoCompleteTextView) findViewById(R.id.addNewEditText);
         editText.setOnEditorActionListener(new OnKeyboardActionKeyClicked());
         super.onFinishInflate();
+    }
+
+    public void setAutoCompleteData(List<String> data) {
+        autoCompleteAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, data);
+        autoCompleteAdapter.setNotifyOnChange(true);
+        editText.setAdapter(autoCompleteAdapter);
     }
 
     private class OnKeyboardActionKeyClicked implements TextView.OnEditorActionListener{
@@ -68,6 +77,7 @@ public class AddNewItemToolbar extends Toolbar {
         } else{
             listener.onAddNewItem(editText.getText().toString());
             editText.setText("");
+            autoCompleteAdapter.add(text);
             return false;
         }
     }

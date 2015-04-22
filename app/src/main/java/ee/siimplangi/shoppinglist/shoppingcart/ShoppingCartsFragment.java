@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ee.siimplangi.shoppinglist.R;
@@ -25,7 +26,7 @@ public class ShoppingCartsFragment extends ListFragment<ShoppingCartViewAdapter,
 
     @Override
     protected List<ShoppingCart> getData() {
-        return getService().getAllItemsWithParentId(0);
+        return getService().getAllItems();
     }
 
     @Override
@@ -54,7 +55,16 @@ public class ShoppingCartsFragment extends ListFragment<ShoppingCartViewAdapter,
     }
 
     @Override
-    public void onToDoListClicked(ShoppingCart listItem) {
-        getMainActivity().onListItemClicked(listItem);
+    protected List<String> getAutoCompleteData() {
+        List<String> autoCompleteData = new ArrayList<>();
+        for (ShoppingCart cart : getService().getAllItems()){
+            autoCompleteData.add(cart.getText());
+        }
+        return autoCompleteData;
+    }
+
+    @Override
+    public void onShoppingCartClicked(ShoppingCart shoppingCart) {
+        getMainActivity().onShoppingCartViewClicked(shoppingCart);
     }
 }

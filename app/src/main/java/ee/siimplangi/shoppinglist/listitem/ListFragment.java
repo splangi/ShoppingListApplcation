@@ -50,9 +50,11 @@ public abstract class ListFragment<A extends ListViewAdapter, D extends ListItem
 
         recyclerView.setAdapter(mAdapter);
 
-        getMainActivity().setListener(this);
+        getMainActivity().setToolBarActionListener(this);
 
         getActivity().setTitle(getTitle());
+
+        getMainActivity().setAutoCompleteData(getAutoCompleteData());
 
         getMainActivity().setMenuItemsToRegularMode();
 
@@ -84,12 +86,6 @@ public abstract class ListFragment<A extends ListViewAdapter, D extends ListItem
         service.editItem(listItem);
     }
 
-
-    @Override
-    public List<D> getDataSet() {
-        return getData();
-    }
-
     @Override
     public void toEditMode() {
         mAdapter.setEditMode();
@@ -110,9 +106,11 @@ public abstract class ListFragment<A extends ListViewAdapter, D extends ListItem
 
     protected abstract String getTitle();
 
-    public DatabaseHandler getDatabaseInstance() {
+    protected DatabaseHandler getDatabaseInstance() {
         return DatabaseHandler.getInstance(getActivity());
     }
+
+    protected abstract List<String> getAutoCompleteData();
 
     protected MainActivity getMainActivity(){
         return (MainActivity) getActivity();

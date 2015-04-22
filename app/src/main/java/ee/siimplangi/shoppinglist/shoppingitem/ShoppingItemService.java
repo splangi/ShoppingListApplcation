@@ -23,24 +23,29 @@ public class ShoppingItemService implements ListItemService<ShoppingItem> {
 
     @Override
     public long addItem(ShoppingItem item) {
-        return addOrEditItem(item);
+        SQLiteDatabase db = dbHandler.getWritableDatabase();
+        return addOrEditItem(item, db);
     }
 
-    private long addOrEditItem(ShoppingItem item){
-        SQLiteDatabase db = dbHandler.getWritableDatabase();
+    @Override
+    public long addItem(ShoppingItem item, SQLiteDatabase db) {
+        return addOrEditItem(item, db);
+    }
+
+    private long addOrEditItem(ShoppingItem item, SQLiteDatabase db){
         ContentValues cv = new ContentValues();
         cv.put(ShoppingItem.KEY_TEXT, item.getText());
         cv.put(ShoppingItem.KEY_COMPLETED, item.isCompleted());
         cv.put(ShoppingItem.KEY_LIST_ID, item.getListId());
+        long id;
         if (item.getId() == -1){
-            long newId = db.insert(ShoppingItem.TABLE_NAME, null, cv);
-            item.setId(newId);
-            return newId;
+            id = db.insert(ShoppingItem.TABLE_NAME, null, cv);
+            item.setId(id);
         } else {
             cv.put(ShoppingItem.KEY_ID, item.getId());
-            long oldId = db.replace(ShoppingItem.TABLE_NAME, null, cv);
-            return oldId;
+            id = db.replace(ShoppingItem.TABLE_NAME, null, cv);
         }
+        return id;
     }
 
     @Override
@@ -93,7 +98,8 @@ public class ShoppingItemService implements ListItemService<ShoppingItem> {
 
     @Override
     public void editItem(ShoppingItem item) {
-        addOrEditItem(item);
+        SQLiteDatabase db = dbHandler.getWritableDatabase();
+        addOrEditItem(item, db);
     }
 
 }

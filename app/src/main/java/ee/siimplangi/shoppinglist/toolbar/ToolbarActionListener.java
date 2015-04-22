@@ -1,7 +1,5 @@
 package ee.siimplangi.shoppinglist.toolbar;
 
-import java.util.List;
-
 import ee.siimplangi.shoppinglist.listitem.ListItem;
 
 /**
@@ -14,7 +12,5 @@ public interface ToolbarActionListener<D extends ListItem> {
     public void toEditMode();
 
     public void exitEditMode();
-
-    public List<D> getDataSet();
 
 }

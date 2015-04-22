@@ -11,7 +11,6 @@ public class ShoppingItem implements ListItem{
 
     public static final String KEY_ID = "id";
     public static final String KEY_COMPLETED = "completed";
-    public static final String KEY_DELETED = "deleted";
     public static final String KEY_TEXT = "text";
     public static final String KEY_LIST_ID = "listId";
 
@@ -70,5 +69,10 @@ public class ShoppingItem implements ListItem{
             return getId() == anotherShoppingItem.getId();
         }
         return super.equals(o);
+    }
+
+    @Override
+    public String toString() {
+        return text;
     }
 }

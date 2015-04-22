@@ -23,24 +23,30 @@ public class ShoppingCartService implements ListItemService<ShoppingCart> {
         this.dbHandler = dbHandler;
     }
 
-    @Override
-    public long addItem(ShoppingCart item) {
-        return addOrEditItem(item);
-    }
 
-    private long addOrEditItem(ShoppingCart item){
-        SQLiteDatabase db = dbHandler.getWritableDatabase();
+    private long addOrEditItem(ShoppingCart item, SQLiteDatabase db){
         ContentValues values = new ContentValues();
         values.put(ShoppingCart.KEY_NAME, item.getText());
+        long listId;
         if (item.getId() == -1){
-            long newListId = db.insert(ShoppingCart.TABLE_NAME, null, values);
-            item.setId(newListId);
-            return newListId;
+            listId = db.insert(ShoppingCart.TABLE_NAME, null, values);
+            item.setId(listId);
         } else{
             values.put(ShoppingCart.KEY_ID, item.getId());
-            long oldListId = db.replace(ShoppingCart.TABLE_NAME, null, values);
-            return oldListId;
+            listId = db.replace(ShoppingCart.TABLE_NAME, null, values);
         }
+        return listId;
+    }
+
+    @Override
+    public long addItem(ShoppingCart item, SQLiteDatabase db){
+        return addOrEditItem(item, db);
+    }
+
+    @Override
+    public long addItem(ShoppingCart item) {
+        SQLiteDatabase db = dbHandler.getWritableDatabase();
+        return addOrEditItem(item, db);
     }
 
     @Override
@@ -54,17 +60,26 @@ public class ShoppingCartService implements ListItemService<ShoppingCart> {
     @Override
     public List<ShoppingCart> getAllItemsWithParentId(long parentId) {
         // We don't use the parentId, because List does not have a parent;
+        return getAllItems();
+    }
+
+    @Override
+    public List<ShoppingCart> getAllItems() {
         final String TOTAL_TASKS = "total";
         final String COMPLETED_TASKS = "completed";
+        final String SHOPPING_CART_KEY_ID = ShoppingCart.TABLE_NAME + "." + ShoppingCart.KEY_ID;
+        final String SHOPPING_CART_KEY_NAME = ShoppingCart.TABLE_NAME + "." + ShoppingCart.KEY_NAME;
+        final String SHOPPING_ITEM_KEY_COMPLETED = ShoppingItem.TABLE_NAME + "." + ShoppingItem.KEY_COMPLETED;
+        final String SHOPPING_ITEM_KEY_LIST_ID = ShoppingItem.TABLE_NAME + "." + ShoppingItem.KEY_LIST_ID;
         String select = "SELECT " +
-                "list."+ ShoppingCart.KEY_ID + ", " +
-                "list."+ ShoppingCart.KEY_NAME + "," +
-                " (IFNULL (SUM(item."+ ShoppingItem.KEY_COMPLETED+"), 0)) AS " + COMPLETED_TASKS + "," +
-                " count(*) AS " + TOTAL_TASKS +
-                " FROM " + ShoppingCart.TABLE_NAME + " list" +
-                " LEFT OUTER JOIN " + ShoppingItem.TABLE_NAME + " item ON list."+ ShoppingCart.KEY_ID + " = item."+ ShoppingItem.KEY_LIST_ID +
-                " GROUP BY list." + ShoppingCart.KEY_ID + " " +
-                " ORDER BY list." + ShoppingCart.KEY_ID + " DESC;";
+                SHOPPING_CART_KEY_ID+ ", " +
+                SHOPPING_CART_KEY_NAME + "," +
+                " (IFNULL (SUM(" + SHOPPING_ITEM_KEY_COMPLETED + "), 0)) AS " + COMPLETED_TASKS + "," +
+                " count("+SHOPPING_ITEM_KEY_LIST_ID+") AS " + TOTAL_TASKS +
+                " FROM " + ShoppingCart.TABLE_NAME +
+                " LEFT OUTER JOIN " + ShoppingItem.TABLE_NAME + " ON "+ SHOPPING_CART_KEY_ID + " = "+ SHOPPING_ITEM_KEY_LIST_ID +
+                " GROUP BY " + SHOPPING_CART_KEY_ID + " " +
+                " ORDER BY " + SHOPPING_CART_KEY_ID + " DESC;";
 
         SQLiteDatabase db = dbHandler.getReadableDatabase();
         Cursor c = db.rawQuery(select, new String[0]);
@@ -81,16 +96,13 @@ public class ShoppingCartService implements ListItemService<ShoppingCart> {
         }
         c.close();
         return lists;
-    }
 
-    @Override
-    public List<ShoppingCart> getAllItems() {
-        return getAllItemsWithParentId(-1);
     }
 
     @Override
     public void editItem(ShoppingCart item) {
-        addOrEditItem(item);
+        SQLiteDatabase db = dbHandler.getWritableDatabase();
+        addOrEditItem(item, db);
     }
 
 

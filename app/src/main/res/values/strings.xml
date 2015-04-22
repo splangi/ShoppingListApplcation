@@ -3,7 +3,18 @@
     <string name="add_new">Add new</string>
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
-    <string name="my_lists">My shopping lists</string>
+    <string name="my_lists">My shopping carts</string>
     <string name="edit">Edit</string>
     <string name="enter_name">Please enter a name</string>
+
+    <string name="empty_shopping_cart">Empty shopping cart</string>
+    <string name="filled_not_completed_shopping_cart">Uncompleted shopping cart</string>
+    <string name="filled_completed_shopping_cart">Completed shopping cart</string>
+
+    <string name="milk">Milk</string>
+    <string name="bread">Bread</string>
+    <string name="sugar">Sugar</string>
+
+    <string name="apples">Apples</string>
+    <string name="oranges">Oranges</string>
 </resources>

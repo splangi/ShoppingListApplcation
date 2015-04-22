@@ -7,7 +7,7 @@ import ee.siimplangi.shoppinglist.shoppingcart.ShoppingCart;
  */
 public interface ListUserActionListener<D extends ListItem> {
 
-    public void onToDoListClicked(ShoppingCart listItem);
+    public void onShoppingCartClicked(ShoppingCart shoppingCartItem);
 
     public void onDeleteItemClicked(D listItem);
 

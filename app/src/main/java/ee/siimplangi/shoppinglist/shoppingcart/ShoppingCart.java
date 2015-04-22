@@ -7,7 +7,7 @@ import ee.siimplangi.shoppinglist.listitem.ListItem;
  */
 public class ShoppingCart implements ListItem {
 
-    public static final String TABLE_NAME = "toDoList";
+    public static final String TABLE_NAME = "shoppingCart";
     public static final String KEY_ID = "id";
     public static final String KEY_NAME = "name";
 
@@ -44,6 +44,7 @@ public class ShoppingCart implements ListItem {
 
     @Override
     public boolean isCompleted() {
+        if (tasksTotal == 0) return false;
         return tasksTotal == completedTasks;
     }
 
@@ -67,5 +68,10 @@ public class ShoppingCart implements ListItem {
             return getId() == anotherShoppingCart.getId();
         }
         return super.equals(o);
+    }
+
+    @Override
+    public String toString() {
+        return text;
     }
 }

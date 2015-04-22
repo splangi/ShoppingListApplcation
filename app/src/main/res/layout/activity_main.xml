@@ -27,11 +27,12 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/addNewEditText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="@string/add_new"
+            android:inputType="textCapSentences"
             android:imeOptions="actionDone"
             android:singleLine="true"
             android:paddingBottom="16dp"

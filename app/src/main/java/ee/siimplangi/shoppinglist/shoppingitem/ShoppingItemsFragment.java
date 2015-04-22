@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ee.siimplangi.shoppinglist.listitem.ListFragment;
@@ -15,8 +16,8 @@ import ee.siimplangi.shoppinglist.shoppingcart.ShoppingCart;
  */
 public class ShoppingItemsFragment extends ListFragment<ShoppingItemViewAdapter, ShoppingItem, ShoppingItemService> {
 
-    public static final String PARENT_LIST_ID_KEY = "parentListId";
-    public static final String PARENT_LIST_TEXT_KEY = "parentListText";
+    public static final String PARENT_CART_ID_KEY = "parentListId";
+    public static final String PARENT_CART_TEXT_KEY = "parentListText";
 
     private ShoppingItemService service;
     private String title;
@@ -25,8 +26,8 @@ public class ShoppingItemsFragment extends ListFragment<ShoppingItemViewAdapter,
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Bundle args = getArguments();
-        title = args.getString(PARENT_LIST_TEXT_KEY);
-        parentId = args.getLong(PARENT_LIST_ID_KEY);
+        title = args.getString(PARENT_CART_TEXT_KEY);
+        parentId = args.getLong(PARENT_CART_ID_KEY);
         getMainActivity().showBackButtonOnActionBar(true);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -63,7 +64,16 @@ public class ShoppingItemsFragment extends ListFragment<ShoppingItemViewAdapter,
     }
 
     @Override
-    public void onToDoListClicked(ShoppingCart listItem) {
-        // do nothing
+    public void onShoppingCartClicked(ShoppingCart shoppingCartItem) {
+        throw new UnsupportedOperationException("Shopping cart cannot be clicked in this fragment!");
+    }
+
+    @Override
+    protected List<String> getAutoCompleteData() {
+        List<String> autoCompleteData = new ArrayList<>();
+        for (ShoppingItem item : getService().getAllItems()){
+            autoCompleteData.add(item.getText());
+        }
+        return autoCompleteData;
     }
 }

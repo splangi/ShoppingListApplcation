@@ -27,7 +27,7 @@ public class ShoppingCartViewHolder extends ListItemViewHolder<ShoppingCart> {
 
         @Override
         public void onClick(View view) {
-            getListener().onToDoListClicked(getItem());
+            getListener().onShoppingCartClicked(getItem());
         }
     }
 
